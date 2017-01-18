@@ -1,0 +1,9 @@
+{
+  "presets": ["es2015-nostrict"],
+  "plugins": [
+    "transform-flow-strip-types",
+    "transform-es3-property-literals",
+    "transform-es3-member-expression-literals",
+    ["transform-es2015-for-of", {"loose": true}]
+  ]
+}
