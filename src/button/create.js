@@ -1,6 +1,6 @@
 /* @flow */
 
-export function createButton(container: HTMLElement, text: string, onClick: (event: Event) => void): HTMLElement {
+export function createButton(container : HTMLElement, text : string, onClick : (event : Event) => void) : HTMLElement {
 
     let button : HTMLElement = document.createElement('button');
 

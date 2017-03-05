@@ -314,7 +314,7 @@
         ],
         "flowtype/space-before-type-colon": [
             2,
-            "never"
+            "always"
         ],
         "flowtype/type-id-match": [
             2,
