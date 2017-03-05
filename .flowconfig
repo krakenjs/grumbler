@@ -1,4 +1,5 @@
 [ignore]
+.*/node_modules/gulp-flowtype
 [include]
 [libs]
 flow-typed
