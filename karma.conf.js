@@ -17,8 +17,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            { pattern: 'test/test.js', included: true, served: true },
-            { pattern: 'test/**/*', included: false, served: true }
+            { pattern: 'node_modules/babel-polyfill/dist/polyfill.js', included: true, served: true },
+            { pattern: 'test/test.js', included: true, served: true }
         ],
 
         plugins: [
@@ -66,6 +66,10 @@ module.exports = function(config) {
                                 'transform-es3-property-literals',
                                 'transform-es3-member-expression-literals',
                                 ['transform-es2015-for-of', {loose: true}],
+                                ['flow-runtime', {
+                                    'assert': true,
+                                    'annotate': true
+                                }],
                                 [ '__coverage__', { only: `${__dirname}/src` } ]
                             ]
                         }
