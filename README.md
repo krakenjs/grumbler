@@ -109,3 +109,7 @@ FAQ
 - **Can I improve this template?**
 
   By all means, please feel to raise a PR, but if it's a big change, try to open an issue first so we can chat
+	
+- **What about support for React, Ember, framework X or Y?**
+
+  Wanted to keep this module as framework-agnostic as possible. Not to mention there are already pretty good boilerplates out there for whatever framework you're using, I'll bet. Otherwise please feel free to be my guest and fork `grumbler-superawesomeframework` if it's helpful.
