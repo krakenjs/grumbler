@@ -79,7 +79,9 @@ Technologies
 - flowtype
 - flow-runtime
 - karma
+- phantomjs
 - mocha
+- istanbul
 - webpack
 - npm
 - travis
