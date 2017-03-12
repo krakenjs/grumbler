@@ -5,7 +5,7 @@ A template for writing distributable javascript modules.
 
 Javascript libraries are fun to write. Setting up all of the boilerplate to get your build up and running is not so fun.
 
-This module provides a forkable module template, which you can use to kick-start new javascript libraries.
+This module provides a forkable module template, which you can use to kick-start a new javascript library. Once you've done that, feel free to come back and switch out the tooling for whatever you prefer.
 
 Features
 --------
@@ -108,7 +108,7 @@ FAQ
 
 - **Can I improve this template?**
 
-  By all means, please feel to raise a PR, but if it's a big change, try to open an issue first so we can chat
+  By all means, please feel to raise a PR, but if it's a big change, try to open an issue first so we can chat!
 	
 - **What about support for React, Ember, framework X or Y?**
 
