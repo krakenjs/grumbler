@@ -77,6 +77,7 @@ Technologies
 - babel
 - eslint
 - flowtype
+- flow-runtime
 - karma
 - mocha
 - webpack
