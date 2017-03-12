@@ -7,60 +7,6 @@ Javascript libraries are fun to write. Setting up all of the boilerplate to get 
 
 This module provides a forkable module template, which you can use to kick-start new javascript libraries.
 
-Quick Start
------------
-
-#### Getting Started
-
-- Fork the module
-- Run setup: `./setup.sh`
-- Start editing code in `./src` and writing tests in `./tests`
-- `gulp build`
-
-##### Other stuff you can do later
-
-- Delete the example code in `./src`, `./test/tests` and `./demo`
-- Edit the module name in `package.json`
-- Edit `README.md` and `CONTRIBUTING.md`
-- Publish your code (see below)
-
-#### Building
-
-```bash
-gulp build
-```
-
-#### Tests
-
-- Edit tests in `./test/tests`
-- Run the tests:
-
-  ```bash
-  gulp test
-  ```
-
-With different/multiple browsers:
-
-```bash
-gulp test --browser=PhantomJS
-gulp test --browser=Chrome
-gulp test --browser=Safari
-gulp test --browser=Firefox
-gulp test --browser=PhantomJS,Chrome,Safari,Firefox
-```
-
-Keeping the browser open after tests:
-
-```bash
-gulp test --browser=Chrome --keep-browser-open
-```
-
-#### Publishing
-
-```bash
-./publish.sh
-```
-
 Features
 --------
 
@@ -85,6 +31,59 @@ Technologies
 - webpack
 - npm
 - travis
+
+Quick Start
+-----------
+
+#### Getting Started
+
+- Fork the module
+- Run setup: `./setup.sh`
+- Start editing code in `./src` and writing tests in `./tests`
+- `gulp build`
+
+#### Building
+
+```bash
+gulp build
+```
+
+#### Tests
+
+- Edit tests in `./test/tests`
+- Run the tests:
+
+  ```bash
+  gulp test
+  ```
+
+#### Testing with different/multiple browsers
+
+```bash
+gulp test --browser=PhantomJS
+gulp test --browser=Chrome
+gulp test --browser=Safari
+gulp test --browser=Firefox
+gulp test --browser=PhantomJS,Chrome,Safari,Firefox
+```
+
+#### Keeping the browser open after tests
+
+```bash
+gulp test --browser=Chrome --keep-browser-open
+```
+
+#### Publishing
+
+##### Before you publish for the first time:
+
+- Delete the example code in `./src`, `./test/tests` and `./demo`
+- Edit the module name in `package.json`
+- Edit `README.md` and `CONTRIBUTING.md`
+
+##### Then:
+
+- Publish your code: `./publish.sh`
 
 FAQ
 ---
