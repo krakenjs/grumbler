@@ -13,16 +13,16 @@ Quick Start
 #### Getting Started
 
 - Fork the module
+- Run setup: `./setup.sh`
+- Start editing code in `./src` and writing tests in `./tests`
+- `gulp build`
+
+##### Other stuff you can do later
+
 - Delete the example code in `./src`, `./test/tests` and `./demo`
 - Edit the module name in `package.json`
 - Edit `README.md` and `CONTRIBUTING.md`
-- Run setup
-
-  ```
-  ./setup.sh
-   ```
-
-- Start editing code in `./src`
+- Publish your code (see below)
 
 #### Building
 
