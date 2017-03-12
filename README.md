@@ -14,7 +14,7 @@ Features
 - Use ES2015 out of the box
 - Write headless Karma / Mocha tests, which run in PhantomJS and other browsers, with code coverage reports
 - Integrate with Travis CI out of the box
-- Write error free, type-safe code with ESLint and Flow Type
+- Write error free, type-safe code with ESLint, Flow Type, and Flow-Runtime
 
 Technologies
 ------------
