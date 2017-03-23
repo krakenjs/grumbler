@@ -1,6 +1,8 @@
 Grumbler
 --------
 
+https://medium.com/@bluepnume/introducing-grumbler-an-opinionated-javascript-module-template-612245e06d00
+
 A template for writing distributable javascript modules.
 
 Javascript libraries are fun to write. Setting up all of the boilerplate to get your build up and running is not so fun.
