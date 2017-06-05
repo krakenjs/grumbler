@@ -6,5 +6,7 @@
 [libs]
 flow-typed
 [options]
+module.name_mapper='^src\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 unsafe.enable_getters_and_setters=true
-module.system.node.resolve_dirname=.
+experimental.const_params=false
+esproposal.export_star_as=enable

@@ -1,7 +1,8 @@
 import gulp from 'gulp';
-import gulpWebpack from 'gulp-webpack';
+import webpackStream from 'webpack-stream';
 import eslint from 'gulp-eslint';
 import flow from 'gulp-flowtype';
+import gulpFlowtype from 'gulp-flowtype';
 import { Server } from 'karma';
 import { argv } from 'yargs';
 import { WEBPACK_CONFIG_MAJOR, WEBPACK_CONFIG_MAJOR_MIN } from './webpack.conf';
@@ -13,19 +14,21 @@ gulp.task('webpack', [ 'webpack-major', 'webpack-major-min' ]);
 
 gulp.task('webpack-major', ['lint'], function() {
   return gulp.src('src/index.js')
-      .pipe(gulpWebpack(WEBPACK_CONFIG_MAJOR))
+      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR))
       .pipe(gulp.dest('dist'));
 });
 
 gulp.task('webpack-major-min', ['lint'], function() {
   return gulp.src('src/index.js')
-      .pipe(gulpWebpack(WEBPACK_CONFIG_MAJOR_MIN))
+      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR_MIN))
       .pipe(gulp.dest('dist'));
 });
 
-gulp.task('typecheck', function() {
+gulp.task('typecheck', [ 'lint' ], function() {
     return gulp.src([ 'src/**/*.js', 'test/**/*.js' ])
-        .pipe(flow())
+        .pipe(gulpFlowtype({
+            abort: true
+        }))
 });
 
 gulp.task('lint', function() {

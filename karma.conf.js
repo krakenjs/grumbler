@@ -44,11 +44,7 @@ module.exports = function(config) {
             devtool: 'inline-source-map',
 
             resolve: {
-                root: [
-                    __dirname
-                ],
-
-                modulesDirectories: [
+                modules: [
                     'node_modules'
                 ]
             },
