@@ -50,3 +50,5 @@ jspm_packages
 flow-typed
 
 .idea
+
+.DS_Store

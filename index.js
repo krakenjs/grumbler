@@ -1,2 +1,2 @@
 
-module.exports = require('./dist/smorgarsbord');
+module.exports = require('./dist/mylibrary');

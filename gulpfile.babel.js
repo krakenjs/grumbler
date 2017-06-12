@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
 import eslint from 'gulp-eslint';
 import flow from 'gulp-flowtype';
@@ -14,13 +15,13 @@ gulp.task('webpack', [ 'webpack-major', 'webpack-major-min' ]);
 
 gulp.task('webpack-major', ['lint'], function() {
   return gulp.src('src/index.js')
-      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR))
+      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR, webpack))
       .pipe(gulp.dest('dist'));
 });
 
 gulp.task('webpack-major-min', ['lint'], function() {
   return gulp.src('src/index.js')
-      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR_MIN))
+      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR_MIN, webpack))
       .pipe(gulp.dest('dist'));
 });
 

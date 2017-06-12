@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015-nostrict"],
+  "presets": [ "es2015" ],
   "plugins": [
     "transform-flow-strip-types",
     "transform-es3-property-literals",
