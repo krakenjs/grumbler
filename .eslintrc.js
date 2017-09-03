@@ -388,7 +388,7 @@ module.exports = {
         'import/no-webpack-loader-syntax': 'error',
         'import/order': [ 'error', { 'newlines-between': 'always' } ],
         'import/prefer-default-export': 'off',
-        'import/unambiguous': 'error',
+        'import/unambiguous': 'off',
 
         'array-bracket-newline': 'off',
         'array-element-newline': 'off',

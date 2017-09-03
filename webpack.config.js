@@ -1,13 +1,25 @@
+let path = require('path');
 let webpack = require('webpack');
 let UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-let CircularDependencyPlugin = require('circular-dependency-plugin')
+let CircularDependencyPlugin = require('circular-dependency-plugin');
 
 const FILE_NAME = 'mylibrary';
 const MODULE_NAME = 'mylibrary';
 
-function getWebpackConfig({ filename, modulename, minify = false }) {
+function getWebpackConfig({ filename, modulename, minify = false, options = {}, vars = {} }) {
 
     return {
+
+        entry: './src/index.js',
+
+        output: {
+            path: path.resolve('./dist'),
+            filename: filename,
+            libraryTarget: 'umd',
+            umdNamedDefine: true,
+            library: modulename,
+            pathinfo: false
+        },
 
         resolve: {
             modules: [
@@ -33,21 +45,18 @@ function getWebpackConfig({ filename, modulename, minify = false }) {
                 }
             ]
         },
-        output: {
-            filename: filename,
-            libraryTarget: 'umd',
-            umdNamedDefine: true,
-            library: modulename,
-            pathinfo: false
-        },
+
         bail: true,
+
         devtool: 'source-map',
+
         plugins: [
             new webpack.SourceMapDevToolPlugin({
                 filename: '[file].map'
             }),
             new webpack.DefinePlugin({
-                __TEST__: false
+                __TEST__: false,
+                ...vars
             }),
             new webpack.NamedModulesPlugin(),
             new UglifyJSPlugin({
@@ -65,17 +74,36 @@ function getWebpackConfig({ filename, modulename, minify = false }) {
                 exclude: /node_modules/,
                 failOnError: true
             })
-        ]
+        ],
+
+        ...options
     };
 }
 
-module.exports.WEBPACK_CONFIG = getWebpackConfig({
+let WEBPACK_CONFIG = getWebpackConfig({
     filename: `${FILE_NAME}.js`,
     modulename: MODULE_NAME
 });
 
-module.exports.WEBPACK_CONFIG_MIN = getWebpackConfig({
+let WEBPACK_CONFIG_MIN = getWebpackConfig({
     filename: `${FILE_NAME}.min.js`,
     modulename: MODULE_NAME,
     minify: true
 });
+
+let WEBPACK_CONFIG_TEST = getWebpackConfig({
+    filename: `${FILE_NAME}.js`,
+    modulename: MODULE_NAME,
+    options: {
+        devtool: 'inline-source-map'
+    },
+    vars: {
+        __TEST__: true
+    }
+});
+
+module.exports = [ WEBPACK_CONFIG, WEBPACK_CONFIG_MIN ];
+
+module.exports.WEBPACK_CONFIG = WEBPACK_CONFIG;
+module.exports.WEBPACK_CONFIG_MIN = WEBPACK_CONFIG_MIN;
+module.exports.WEBPACK_CONFIG_TEST = WEBPACK_CONFIG_TEST;

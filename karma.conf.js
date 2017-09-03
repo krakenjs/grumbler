@@ -1,6 +1,8 @@
-var argv = require('yargs').argv;
-var path = require('path');
-var webpack = require('webpack');
+let argv = require('yargs').argv;
+let path = require('path');
+let webpack = require('webpack');
+
+let { WEBPACK_CONFIG_TEST } = require('./webpack.config.js');
 
 module.exports = function(config) {
     config.set({
@@ -40,51 +42,7 @@ module.exports = function(config) {
             stats: false
         },
 
-        webpack: {
-            devtool: 'inline-source-map',
-
-            resolve: {
-                modules: [
-                    __dirname,
-                    'node_modules'
-                ]
-            },
-
-            module: {
-                loaders: [
-                    {
-                        test: /\.js$/,
-                        exclude: /(dist|chai)/,
-                        loader: 'babel-loader',
-                        query: {
-                            presets: ['es2015'],
-                            plugins: [
-                                'transform-flow-strip-types',
-                                'transform-es3-property-literals',
-                                'transform-es3-member-expression-literals',
-                                ['transform-es2015-for-of', {loose: true}],
-                                ['flow-runtime', {
-                                    'assert': true,
-                                    'annotate': true
-                                }],
-                                [ '__coverage__', { only: `${__dirname}/src` } ]
-                            ]
-                        }
-                    },
-                    {
-                        test: /\.(html?|css|json)$/,
-                        loader: 'raw-loader'
-                    }
-                ]
-            },
-            bail: false,
-            plugins: [
-                new webpack.DefinePlugin({
-                    __TEST__: true
-                })
-            ]
-        },
-
+        webpack: WEBPACK_CONFIG_TEST,
 
         // list of files to exclude
         exclude: [

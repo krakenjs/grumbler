@@ -1,4 +1,4 @@
 /* @flow */
 
-import './util.js';
-export * from './tests';
+import './util';
+import './tests';
