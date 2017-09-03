@@ -1,5 +1,6 @@
 let webpack = require('webpack');
 let UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+let CircularDependencyPlugin = require('circular-dependency-plugin')
 
 const FILE_NAME = 'mylibrary';
 const MODULE_NAME = 'mylibrary';
@@ -59,6 +60,10 @@ function getWebpackConfig({ filename, modulename, minify = false }) {
                 },
                 mangle: minify,
                 sourceMap: true
+            }),
+            new CircularDependencyPlugin({
+                exclude: /node_modules/,
+                failOnError: true
             })
         ]
     };
