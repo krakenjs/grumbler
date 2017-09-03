@@ -1,10 +1,10 @@
-import webpack from 'webpack';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+let webpack = require('webpack');
+let UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-export let FILE_NAME = 'mylibrary';
-export let MODULE_NAME = 'mylibrary';
+const FILE_NAME = 'mylibrary';
+const MODULE_NAME = 'mylibrary';
 
-function getWebpackConfig(filename) {
+function getWebpackConfig({ filename, modulename, minify = false }) {
 
     return {
 
@@ -36,7 +36,7 @@ function getWebpackConfig(filename) {
             filename: filename,
             libraryTarget: 'umd',
             umdNamedDefine: true,
-            library: MODULE_NAME,
+            library: modulename,
             pathinfo: false
         },
         bail: true,
@@ -51,46 +51,26 @@ function getWebpackConfig(filename) {
             new webpack.NamedModulesPlugin(),
             new UglifyJSPlugin({
                 test: /\.js$/,
-                beautify: true,
-                minimize: false,
+                beautify: !minify,
+                minimize: minify,
                 compress: {
                     warnings: false,
-                    sequences: false
+                    sequences: minify
                 },
-                mangle: false,
+                mangle: minify,
                 sourceMap: true
             })
         ]
     };
 }
 
-function getWebpackConfigMin(filename) {
+module.exports.WEBPACK_CONFIG = getWebpackConfig({
+    filename: `${FILE_NAME}.js`,
+    modulename: MODULE_NAME
+});
 
-    let config = getWebpackConfig(filename);
-
-    config.plugins = [
-        new webpack.SourceMapDevToolPlugin({
-             filename: '[file].map'
-        }),
-        new webpack.DefinePlugin({
-            __TEST__: false
-        }),
-        new webpack.NamedModulesPlugin(),
-        new UglifyJSPlugin({
-            test: /\.js$/,
-            beautify: false,
-            minimize: true,
-            compress: {
-                warnings: false,
-                sequences: true
-            },
-            mangle: true,
-            sourceMap: true
-        })
-    ];
-
-    return config;
-}
-
-export let WEBPACK_CONFIG_MAJOR = getWebpackConfig(`${FILE_NAME}.js`);
-export let WEBPACK_CONFIG_MAJOR_MIN = getWebpackConfigMin(`${FILE_NAME}.min.js`);
+module.exports.WEBPACK_CONFIG_MIN = getWebpackConfig({
+    filename: `${FILE_NAME}.min.js`,
+    modulename: MODULE_NAME,
+    minify: true
+});

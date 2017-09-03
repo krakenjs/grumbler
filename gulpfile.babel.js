@@ -1,34 +1,34 @@
-import gulp from 'gulp';
-import gulpIf from 'gulp-if';
-import webpack from 'webpack';
-import webpackStream from 'webpack-stream';
-import friendlyFormatter from 'eslint-friendly-formatter';
-import gulpEslint from 'gulp-eslint';
-import flow from 'gulp-flowtype';
-import gulpFlowtype from 'gulp-flowtype';
-import { Server } from 'karma';
-import { argv } from 'yargs';
+let gulp = require('gulp');
+let gulpIf = require('gulp-if');
+let webpack = require('webpack');
+let webpackStream = require('webpack-stream');
+let friendlyFormatter = require('eslint-friendly-formatter');
+let gulpEslint = require('gulp-eslint');
+let flow = require('gulp-flowtype');
+let gulpFlowtype = require('gulp-flowtype');
+let { Server } = require('karma');
+let { argv } = require('yargs');
 
-import { WEBPACK_CONFIG_MAJOR, WEBPACK_CONFIG_MAJOR_MIN } from './webpack.conf';
+let { WEBPACK_CONFIG, WEBPACK_CONFIG_MIN } = require('./webpack.conf');
 
 gulp.task('test', [ 'lint', 'karma', 'typecheck' ]);
 gulp.task('build', [ 'test', 'webpack' ]);
 
-gulp.task('webpack', [ 'webpack-major', 'webpack-major-min' ]);
+gulp.task('webpack', [ 'webpack-major', 'webpack-min' ]);
 
-gulp.task('webpack-major', ['lint'], function() {
+gulp.task('webpack-major', function() {
   return gulp.src('src/index.js')
-      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR, webpack))
+      .pipe(webpackStream(WEBPACK_CONFIG, webpack))
       .pipe(gulp.dest('dist'));
 });
 
-gulp.task('webpack-major-min', ['lint'], function() {
+gulp.task('webpack-min', function() {
   return gulp.src('src/index.js')
-      .pipe(webpackStream(WEBPACK_CONFIG_MAJOR_MIN, webpack))
+      .pipe(webpackStream(WEBPACK_CONFIG_MIN, webpack))
       .pipe(gulp.dest('dist'));
 });
 
-gulp.task('typecheck', [ 'lint' ], function() {
+gulp.task('typecheck', function() {
     return gulp.src([ 'src/**/*.js', 'test/**/*.js' ])
         .pipe(gulpFlowtype({
             abort: true
