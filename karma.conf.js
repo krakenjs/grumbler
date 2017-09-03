@@ -5,72 +5,127 @@ let webpack = require('webpack');
 let { WEBPACK_CONFIG_TEST } = require('./webpack.config.js');
 
 module.exports = function(config) {
-    config.set({
 
-        // base path that will be used to resolve all patterns (eg. files, exclude)
+    let debug          = Boolean(argv.debug);
+    let quick          = Boolean(argv.quick);
+    let captureConsole = Boolean(argv['console'])
+    let keepOpen       = Boolean(argv['keep-open']) || debug;
+    let autoWatch      = Boolean(keepOpen);
+    let coverage       = !Boolean(argv['no-coverage']) && !quick;
+    let browsers       = argv['browser'];
+    let logLevel       = argv['log-level'] || argv['loglevel'] || (keepOpen ? 'info' : '');
+    let headless       = !keepOpen;
+
+    let karmaConfig = {
+
+        files: [
+            {
+                pattern: 'node_modules/babel-polyfill/dist/polyfill.js',
+                included: true,
+                served: true
+            },
+
+            {
+                pattern: 'test/test.js',
+                included: true,
+                served: true
+            }
+        ],
+
+        preprocessors: {
+            'test/test.js':         [ 'webpack',  'sourcemap' ],
+            'test/windows/**/*.js': [ 'webpack',  'sourcemap' ],
+            'src/**/*.js':          [ 'coverage', 'sourcemap' ]
+        },
+
+        customLaunchers: {
+
+            xChrome: {
+                base: 'Chrome',
+                flags: [
+                    '--no-sandbox',
+                    '--disable-gpu',
+                    '--remote-debugging-port=9222',
+                    '--remote-debugging-address=0.0.0.0',
+                    // '--auto-open-devtools-for-tabs',
+                    '--enable-precise-memory-info',
+                    '--js-flags="--expose-gc"'
+                ],
+                debug: debug
+            },
+
+            xPhantom: {
+                base: 'PhantomJS',
+                flags: [
+                    '--load-images=true',
+                    '--disk-cache=true',
+                    '--disk-cache-path=node_modules/.cache/phantomjs',
+                    '--max-disk-cache-size=1000000'
+                ],
+                debug: debug
+            }
+
+        },
+
+        webpack: WEBPACK_CONFIG_TEST,
+
+        reporters: [
+            quick ? 'progress' : 'spec'
+        ],
+
+        autoWatch: autoWatch,
+        logLevel: debug ? config.LOG_DEBUG : logLevel || config.LOG_WARN,
+
         basePath: __dirname,
 
-        // frameworks to use
-        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
             'mocha',
             'sinon-chai'
         ],
 
-        // list of files / patterns to load in the browser
-        files: [
-            { pattern: 'node_modules/babel-polyfill/dist/polyfill.js', included: true, served: true },
-            { pattern: 'test/test.js', included: true, served: true }
-        ],
+        client: {
+            captureConsole: captureConsole
+        },
 
-        plugins: [
-            require('karma-webpack'),
-            require('karma-mocha'),
-            require('karma-phantomjs-launcher'),
-            require('karma-chrome-launcher'),
-            require('karma-safari-launcher'),
-            require('karma-firefox-launcher'),
-            require('karma-ie-launcher'),
-            require('karma-sinon-chai'),
-            require('karma-coverage'),
-            require('karma-spec-reporter'),
-            require('karma-sourcemap-loader')
-        ],
+        port: 9876,
+
+        colors: true,
 
         webpackMiddleware: {
-            noInfo: true,
-            stats: false
+            noInfo: !debug,
+            stats: !debug
         },
 
-        webpack: WEBPACK_CONFIG_TEST,
+        browserNoActivityTimeout: 60 * 60 * 1000,
+        browserDisconnectTimeout: 30 * 1000,
+        browserDisconnectTolerance: 2,
+        captureTimeout: 120000,
+        reportSlowerThan: 10000,
 
-        // list of files to exclude
-        exclude: [
-        ],
-
-
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-            'test/test.js': ['webpack', 'sourcemap'],
-            'test/windows/**/*.js': ['webpack', 'sourcemap'],
-            'src/**/*.js': ['coverage',  'sourcemap']
+        browserConsoleLogOptions: {
+            level: debug ? 'debug' : 'error',
+            format: '%b %T: %m',
+            terminal: true
         },
 
-        // test results reporter to use
-        // possible values: 'dots', 'progress'
-        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: [
-            'spec',
-            'coverage'
-        ],
+        singleRun: !keepOpen,
+    };
 
-        coverageReporter: {
+    if (browsers) {
+        karmaConfig.browsers = browsers.split(',');
+    } else {
+        karmaConfig.browsers = [ 'xChrome' ];
+    }
 
+    if (coverage) {
+        karmaConfig.reporters.push('coverage');
+
+        karmaConfig.coverageReporter = {
             instrumenterOptions: {
-                istanbul: { noCompact: true }
+                istanbul: {
+                    noCompact: true
+                }
             },
-
             reporters: [
                 {
                     type: 'text'
@@ -81,37 +136,12 @@ module.exports = function(config) {
                     subdir: '.'
                 }
             ]
-        },
+        };
+    }
 
+    if (headless) {
+        karmaConfig.customLaunchers.xChrome.flags.push('--headless');
+    }
 
-        // web server port
-        port: 9876,
-
-
-        // enable / disable colors in the output (reporters and logs)
-        colors: true,
-
-
-        // level of logging
-        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_WARN,
-
-
-        // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
-
-
-        // start these browsers
-        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: (argv.browser && argv.browser.split(',')) || ['PhantomJS'],
-
-
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
-
-        // Concurrency level
-        // how many browser should be started simultaneous
-        concurrency: Infinity
-    });
+    config.set(karmaConfig);
 };
