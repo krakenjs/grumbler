@@ -31,8 +31,6 @@
         "__TEST__": true
     },
 
-    "fix": true,
-
     "rules": {
         // possible errors
         "comma-dangle": 2,
