@@ -1,7 +1,8 @@
 /* @flow */
 
 import { assert } from 'chai';
-import { createButton } from 'src/index';
+
+import { createButton } from '../../src/index';
 
 describe('button cases', () => {
 

@@ -1,11 +1,14 @@
 import gulp from 'gulp';
+import gulpIf from 'gulp-if';
 import webpack from 'webpack';
 import webpackStream from 'webpack-stream';
-import eslint from 'gulp-eslint';
+import friendlyFormatter from 'eslint-friendly-formatter';
+import gulpEslint from 'gulp-eslint';
 import flow from 'gulp-flowtype';
 import gulpFlowtype from 'gulp-flowtype';
 import { Server } from 'karma';
 import { argv } from 'yargs';
+
 import { WEBPACK_CONFIG_MAJOR, WEBPACK_CONFIG_MAJOR_MIN } from './webpack.conf';
 
 gulp.task('test', [ 'lint', 'karma', 'typecheck' ]);
@@ -32,10 +35,28 @@ gulp.task('typecheck', [ 'lint' ], function() {
         }))
 });
 
-gulp.task('lint', function() {
-  return gulp.src([ 'src/**/*.js', 'test/**/*.js' ]).pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(eslint.failAfterError());
+gulp.task('lint', ['lint-src', 'lint-test']);
+
+function isFixed(file) {
+	return file.eslint != null && file.eslint.fixed;
+}
+
+gulp.task('lint-src', function() {
+    return gulp.src([ 'src/**/*.{js,jsx}' ]).pipe(gulpEslint({
+        fix: Boolean(argv['fix'])
+    }))
+        .pipe(gulpEslint.format(friendlyFormatter))
+        .pipe(gulpEslint.failAfterError())
+        .pipe(gulpIf(isFixed, gulp.dest('./src')));
+});
+
+gulp.task('lint-test', function() {
+    return gulp.src([ 'test/{tests,windows}/**/*.{js,jsx}' ]).pipe(gulpEslint({
+        fix: Boolean(argv['fix'])
+    }))
+        .pipe(gulpEslint.format(friendlyFormatter))
+        .pipe(gulpEslint.failAfterError())
+        .pipe(gulpIf(isFixed, gulp.dest('./test')));
 });
 
 gulp.task('karma', ['lint'], function (done) {
