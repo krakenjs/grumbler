@@ -27,6 +27,7 @@ Technologies
 - flow-runtime
 - karma
 - phantomjs
+- chrome headless
 - mocha
 - istanbul
 - webpack
