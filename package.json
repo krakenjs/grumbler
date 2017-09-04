@@ -4,7 +4,9 @@
   "description": "Javascript module template.",
   "main": "index.js",
   "scripts": {
+    "setup": "npm install && npm run flow-typed",
     "lint": "eslint src/ test/",
+    "flow-typed": "flow-typed install",
     "flow": "flow",
     "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",
     "karma": "cross-env NODE_ENV=test babel-node ./node_modules/.bin/karma start",
@@ -77,6 +79,7 @@
     "eslint-plugin-unicorn": "^2.1.2",
     "flow-bin": "^0.54.0",
     "flow-runtime": "^0.14.0",
+    "flow-typed": "^2.1.5",
     "istanbul-instrumenter-loader": "^3.0.0",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",

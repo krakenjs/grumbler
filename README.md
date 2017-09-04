@@ -3,7 +3,7 @@ Grumbler
 
 https://medium.com/@bluepnume/introducing-grumbler-an-opinionated-javascript-module-template-612245e06d00
 
-A template for writing distributable javascript modules.
+A template for writing distributable javascript libraries.
 
 Javascript libraries are fun to write. Setting up all of the boilerplate to get your build up and running is not so fun.
 
@@ -16,7 +16,7 @@ Features
 - Use ES2015 out of the box
 - Write headless Karma / Mocha tests, which run in PhantomJS and other browsers, with code coverage reports
 - Integrate with Travis CI out of the box
-- Write error free, type-safe code with ESLint, Flow Type, and Flow-Runtime
+- Write error free, type-safe code with ESLint, Flow-Type, and Flow-Runtime
 
 Technologies
 ------------
@@ -39,7 +39,7 @@ Quick Start
 #### Getting Started
 
 - Fork the module
-- Run setup: `./setup.sh`
+- Run setup: `npm run setup`
 - Start editing code in `./src` and writing tests in `./tests`
 - `npm run build`
 
@@ -71,7 +71,7 @@ npm run karma -- --browser=PhantomJS,Chrome,Safari,Firefox
 #### Keeping the browser open after tests
 
 ```bash
-npm run karma -- --browser=Chrome --keep-browser-open
+npm run karma -- --browser=Chrome --keep-open
 ```
 
 #### Publishing
@@ -84,7 +84,8 @@ npm run karma -- --browser=Chrome --keep-browser-open
 
 ##### Then:
 
-- Publish your code: `./publish.sh`
+- Publish your code: `npm run release` to add a patch
+  - Or `npm run release:path`, `npm run release:minor`, `npm run release:major`
 
 FAQ
 ---
