@@ -41,7 +41,7 @@ Quick Start
 - Fork the module
 - Run setup: `./setup.sh`
 - Start editing code in `./src` and writing tests in `./tests`
-- `gulp build`
+- `npm run build`
 
 #### Building
 
@@ -55,7 +55,7 @@ npm run build
 - Run the tests:
 
   ```bash
-  gulp test
+  npm run test
   ```
 
 #### Testing with different/multiple browsers
