@@ -1,2 +1,4 @@
+/* @flow */
 
-module.exports = require('./dist/mylibrary');
+// $FlowFixMe
+module.exports = require('./dist/mylibrary'); // eslint-disable-line import/no-commonjs

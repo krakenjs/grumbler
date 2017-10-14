@@ -1,34 +1,36 @@
-let argv = require('yargs').argv;
-let path = require('path');
-let webpack = require('webpack');
+/* @flow */
 
-let { WEBPACK_CONFIG_TEST } = require('./webpack.config.js');
+import { argv } from 'yargs';
 
-module.exports = function(config) {
+import { WEBPACK_CONFIG_TEST } from './webpack.config';
+
+export default function configKarma(config : Object) {
 
     let debug          = Boolean(argv.debug);
     let quick          = Boolean(argv.quick);
-    let captureConsole = Boolean(argv['console'])
+    let captureConsole = Boolean(argv.console);
     let keepOpen       = Boolean(argv['keep-open']) || debug;
     let autoWatch      = Boolean(keepOpen);
-    let coverage       = !Boolean(argv['no-coverage']) && !quick;
-    let browsers       = argv['browser'];
-    let logLevel       = argv['log-level'] || argv['loglevel'] || (keepOpen ? 'info' : '');
+    let coverage       = !argv['no-coverage'] && !quick;
+    let logLevel       = argv['log-level'] || argv.loglevel || (keepOpen ? 'info' : '');
     let headless       = !keepOpen;
 
-    let karmaConfig = {
+    // $FlowFixMe
+    let browsers: string = argv.browser;
+
+    let karmaConfig : Object = {
 
         files: [
             {
-                pattern: 'node_modules/babel-polyfill/dist/polyfill.js',
+                pattern:  'node_modules/babel-polyfill/dist/polyfill.js',
                 included: true,
-                served: true
+                served:   true
             },
 
             {
-                pattern: 'test/test.js',
+                pattern:  'test/test.js',
                 included: true,
-                served: true
+                served:   true
             }
         ],
 
@@ -41,7 +43,7 @@ module.exports = function(config) {
         customLaunchers: {
 
             xChrome: {
-                base: 'Chrome',
+                base:  'Chrome',
                 flags: [
                     '--no-sandbox',
                     '--disable-gpu',
@@ -51,18 +53,18 @@ module.exports = function(config) {
                     '--enable-precise-memory-info',
                     '--js-flags="--expose-gc"'
                 ],
-                debug: debug
+                debug
             },
 
             xPhantom: {
-                base: 'PhantomJS',
+                base:  'PhantomJS',
                 flags: [
                     '--load-images=true',
                     '--disk-cache=true',
                     '--disk-cache-path=node_modules/.cache/phantomjs',
                     '--max-disk-cache-size=1000000'
                 ],
-                debug: debug
+                debug
             }
 
         },
@@ -73,8 +75,8 @@ module.exports = function(config) {
             quick ? 'progress' : 'spec'
         ],
 
-        autoWatch: autoWatch,
-        logLevel: debug ? config.LOG_DEBUG : logLevel || config.LOG_WARN,
+        autoWatch,
+        logLevel:  debug ? config.LOG_DEBUG : logLevel || config.LOG_WARN,
 
         basePath: __dirname,
 
@@ -84,7 +86,7 @@ module.exports = function(config) {
         ],
 
         client: {
-            captureConsole: captureConsole
+            captureConsole
         },
 
         port: 9876,
@@ -93,22 +95,22 @@ module.exports = function(config) {
 
         webpackMiddleware: {
             noInfo: !debug,
-            stats: !debug
+            stats:  !debug
         },
 
-        browserNoActivityTimeout: 60 * 60 * 1000,
-        browserDisconnectTimeout: 30 * 1000,
+        browserNoActivityTimeout:   60 * 60 * 1000,
+        browserDisconnectTimeout:   30 * 1000,
         browserDisconnectTolerance: 2,
-        captureTimeout: 120000,
-        reportSlowerThan: 10000,
+        captureTimeout:             120000,
+        reportSlowerThan:           10000,
 
         browserConsoleLogOptions: {
-            level: debug ? 'debug' : 'error',
-            format: '%b %T: %m',
+            level:    debug ? 'debug' : 'error',
+            format:   '%b %T: %m',
             terminal: true
         },
 
-        singleRun: !keepOpen,
+        singleRun: !keepOpen
     };
 
     if (browsers) {
@@ -131,8 +133,8 @@ module.exports = function(config) {
                     type: 'text'
                 },
                 {
-                    type : 'html',
-                    dir : 'coverage/',
+                    type:   'html',
+                    dir:    'coverage/',
                     subdir: '.'
                 }
             ]
@@ -144,4 +146,4 @@ module.exports = function(config) {
     }
 
     config.set(karmaConfig);
-};
+}

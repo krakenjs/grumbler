@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install && npm run flow-typed",
-    "lint": "eslint src/ test/",
+    "lint": "eslint src/ test/ *.js",
     "flow-typed": "flow-typed install",
     "flow": "flow",
     "flow:build": "flow gen-flow-files ./src/index.js --out-dir ./dist/module",

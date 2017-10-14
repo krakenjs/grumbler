@@ -1,24 +1,36 @@
-let path = require('path');
-let webpack = require('webpack');
-let UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-let CircularDependencyPlugin = require('circular-dependency-plugin');
+/* @flow */
+
+// eslint-disable-next-line import/no-nodejs-modules
+import path from 'path';
+
+import webpack from 'webpack';
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
 
 const FILE_NAME = 'mylibrary';
 const MODULE_NAME = 'mylibrary';
 
-function getWebpackConfig({ filename, modulename, minify = false, options = {}, vars = {} }) {
+type WebpackConfigOptions = {
+    filename : string,
+    modulename : string,
+    minify? : boolean,
+    options? : Object,
+    vars? : { [string] : mixed }
+};
+
+function getWebpackConfig({ filename, modulename, minify = false, options = {}, vars = {} } : WebpackConfigOptions) : Object {
 
     return {
 
         entry: './src/index.js',
 
         output: {
-            path: path.resolve('./dist'),
-            filename: filename,
-            libraryTarget: 'umd',
+            path:           path.resolve('./dist'),
+            filename,
+            libraryTarget:  'umd',
             umdNamedDefine: true,
-            library: modulename,
-            pathinfo: false
+            library:        modulename,
+            pathinfo:       false
         },
 
         resolve: {
@@ -31,16 +43,16 @@ function getWebpackConfig({ filename, modulename, minify = false, options = {}, 
         module: {
             rules: [
                 {
-                    test: /sinon\.js$/,
-                    loader: "imports?define=>false,require=>false"
+                    test:   /sinon\.js$/,
+                    loader: 'imports?define=>false,require=>false'
                 },
                 {
-                    test: /\.js$/,
+                    test:    /\.js$/,
                     exclude: /(dist)/,
-                    loader: 'babel-loader'
+                    loader:  'babel-loader'
                 },
                 {
-                    test: /\.(html?|css|json)$/,
+                    test:    /\.(html?|css|json)$/,
                     loader: 'raw-loader'
                 }
             ]
@@ -60,18 +72,18 @@ function getWebpackConfig({ filename, modulename, minify = false, options = {}, 
             }),
             new webpack.NamedModulesPlugin(),
             new UglifyJSPlugin({
-                test: /\.js$/,
+                test:     /\.js$/,
                 beautify: !minify,
                 minimize: minify,
                 compress: {
-                    warnings: false,
+                    warnings:  false,
                     sequences: minify
                 },
-                mangle: minify,
+                mangle:    minify,
                 sourceMap: true
             }),
             new CircularDependencyPlugin({
-                exclude: /node_modules/,
+                exclude:     /node_modules/,
                 failOnError: true
             })
         ],
@@ -80,21 +92,21 @@ function getWebpackConfig({ filename, modulename, minify = false, options = {}, 
     };
 }
 
-let WEBPACK_CONFIG = getWebpackConfig({
-    filename: `${FILE_NAME}.js`,
+export let WEBPACK_CONFIG = getWebpackConfig({
+    filename:   `${ FILE_NAME }.js`,
     modulename: MODULE_NAME
 });
 
-let WEBPACK_CONFIG_MIN = getWebpackConfig({
-    filename: `${FILE_NAME}.min.js`,
+export let WEBPACK_CONFIG_MIN = getWebpackConfig({
+    filename:   `${ FILE_NAME }.min.js`,
     modulename: MODULE_NAME,
-    minify: true
+    minify:     true
 });
 
-let WEBPACK_CONFIG_TEST = getWebpackConfig({
-    filename: `${FILE_NAME}.js`,
+export let WEBPACK_CONFIG_TEST = getWebpackConfig({
+    filename:   `${ FILE_NAME }.js`,
     modulename: MODULE_NAME,
-    options: {
+    options:    {
         devtool: 'inline-source-map'
     },
     vars: {
@@ -102,8 +114,4 @@ let WEBPACK_CONFIG_TEST = getWebpackConfig({
     }
 });
 
-module.exports = [ WEBPACK_CONFIG, WEBPACK_CONFIG_MIN ];
-
-module.exports.WEBPACK_CONFIG = WEBPACK_CONFIG;
-module.exports.WEBPACK_CONFIG_MIN = WEBPACK_CONFIG_MIN;
-module.exports.WEBPACK_CONFIG_TEST = WEBPACK_CONFIG_TEST;
+export default [ WEBPACK_CONFIG, WEBPACK_CONFIG_MIN ];
