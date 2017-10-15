@@ -1,7 +1,8 @@
 /* @flow */
+/* eslint import/no-nodejs-modules: off */
 
-// eslint-disable-next-line import/no-nodejs-modules
 import path from 'path';
+import qs from 'querystring';
 
 import webpack from 'webpack';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
@@ -9,6 +10,11 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 
 const FILE_NAME = 'mylibrary';
 const MODULE_NAME = 'mylibrary';
+
+const DEFAULT_VARS = {
+    __TEST__: false,
+    __MIN__:  false
+};
 
 type WebpackConfigOptions = {
     filename : string,
@@ -19,6 +25,16 @@ type WebpackConfigOptions = {
 };
 
 function getWebpackConfig({ filename, modulename, minify = false, options = {}, vars = {} } : WebpackConfigOptions) : Object {
+
+    vars = {
+        ...DEFAULT_VARS,
+        ...vars
+    };
+
+    const PREPROCESSOR_OPTS = {
+        'ifdef-triple-slash': 'false',
+        ...vars
+    };
 
     return {
 
@@ -42,6 +58,10 @@ function getWebpackConfig({ filename, modulename, minify = false, options = {}, 
 
         module: {
             rules: [
+                {
+                    test:    /\.js$/,
+                    loader: `ifdef-loader?${ qs.encode(PREPROCESSOR_OPTS) }`
+                },
                 {
                     test:   /sinon\.js$/,
                     loader: 'imports?define=>false,require=>false'
@@ -100,7 +120,10 @@ export let WEBPACK_CONFIG = getWebpackConfig({
 export let WEBPACK_CONFIG_MIN = getWebpackConfig({
     filename:   `${ FILE_NAME }.min.js`,
     modulename: MODULE_NAME,
-    minify:     true
+    minify:     true,
+    vars:       {
+        __MIN__: true
+    }
 });
 
 export let WEBPACK_CONFIG_TEST = getWebpackConfig({

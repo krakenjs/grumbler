@@ -20,6 +20,7 @@
     "release:major": "./publish.sh major",
     "clean": "rimraf dist coverage",
     "reinstall": "rimraf flow-typed && rimraf node_modules && npm install && flow-typed install",
+    "postinstall": "flow-typed install",
     "debug": "cross-env NODE_ENV=debug"
   },
   "files": [
@@ -82,7 +83,8 @@
     "eslint-plugin-unicorn": "^2.1.2",
     "flow-bin": "^0.57.2",
     "flow-runtime": "^0.14.0",
-    "flow-typed": "^2.1.5",
+    "flow-typed": "^2.2.0",
+    "ifdef-loader": "^2.0.3",
     "istanbul-instrumenter-loader": "^3.0.0",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
@@ -100,6 +102,7 @@
     "lolex": "^2.1.2",
     "mocha": "^4.0.1",
     "phantomjs-prebuilt": "^2.1.7",
+    "querystring": "^0.2.0",
     "raw-loader": "^0.5.1",
     "sinon": "^4.0.1",
     "sinon-chai": "^2.8.0",
