@@ -3,7 +3,9 @@
 .*/node_modules/flow-runtime
 .*/node_modules/npm
 .*/node_modules/eslint-plugin-compat
+.*/dist/module
 [include]
+node_modules/grumbler-scripts/declarations.js
 [libs]
 flow-typed
 [options]
