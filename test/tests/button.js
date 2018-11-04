@@ -12,7 +12,7 @@ describe('button cases', () => {
             return done(new Error(`Expected document.body to be present`));
         }
 
-        let button = createButton(document.body, 'click me', (event) => {
+        const button = createButton(document.body, 'click me', (event) => {
             assert.isOk(event);
             done();
         });
