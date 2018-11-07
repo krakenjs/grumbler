@@ -6,9 +6,9 @@
 .*/node_modules/jsonlint
 .*/dist/module
 [include]
-node_modules/grumbler-scripts/declarations.js
 [libs]
 flow-typed
+node_modules/grumbler-scripts/declarations.js
 [options]
 module.name_mapper='^src\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 experimental.const_params=false
