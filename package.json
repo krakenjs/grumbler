@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setup": "npm install && npm run flow-typed",
-    "lint": "eslint src/ test/ *.js",
+    "lint": "eslint src/ test/ *.js --ext .js,.jsx",
     "flow-typed": "rm -rf ./flow-typed && flow-typed install && flow-typed install mocha@4",
     "flow": "flow",
     "karma": "cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start",
