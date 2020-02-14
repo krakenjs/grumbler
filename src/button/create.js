@@ -4,7 +4,7 @@ export function createButton(container : HTMLElement, text : string, onClick : (
 
     const button : HTMLElement = document.createElement('button');
 
-    button.innerText = text;
+    button.textContent = text;
     button.addEventListener('click', onClick);
 
     container.appendChild(button);

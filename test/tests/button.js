@@ -1,7 +1,5 @@
 /* @flow */
 
-import { assert } from 'chai';
-
 import { createButton } from '../../src/index';
 
 describe('button cases', () => {
@@ -12,8 +10,7 @@ describe('button cases', () => {
             return done(new Error(`Expected document.body to be present`));
         }
 
-        const button = createButton(document.body, 'click me', (event) => {
-            assert.isOk(event);
+        const button = createButton(document.body, 'click me', () => {
             done();
         });
 
