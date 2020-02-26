@@ -4,6 +4,7 @@
   "description": "Javascript module template.",
   "main": "index.js",
   "scripts": {
+    "dev": "babel-node $(npm bin)/webpack-dev-server --config webpack.config.js --port 9000 --open-page demo/dev/index.htm --hot=false --inline=false",
     "setup": "npm install && npm run flow-typed",
     "lint": "eslint src/ test/ *.js --ext .js,.jsx",
     "flow-typed": "rm -rf ./flow-typed && flow-typed install && flow-typed install mocha@4",
