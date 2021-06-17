@@ -1,6 +1,17 @@
 Grumbler
 --------
 
+[![build status][build-badge]][build]
+[![code coverage][coverage-badge]][coverage]
+[![npm version][version-badge]][package]
+
+[build-badge]: https://img.shields.io/github/workflow/status/krakenjs/grumbler/build?logo=github&style=flat-square
+[build]: https://github.com/krakenjs/grumbler/actions?query=workflow%3Abuild
+[coverage-badge]: https://img.shields.io/codecov/c/github/krakenjs/grumbler.svg?style=flat-square
+[coverage]: https://codecov.io/github/krakenjs/grumbler/
+[version-badge]: https://img.shields.io/npm/v/grumbler.svg?style=flat-square
+[package]: https://www.npmjs.com/package/grumbler
+
 https://medium.com/@bluepnume/introducing-grumbler-an-opinionated-javascript-module-template-612245e06d00
 
 A template for writing distributable javascript libraries.
