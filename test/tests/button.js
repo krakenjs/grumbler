@@ -10,6 +10,7 @@ describe('button cases', () => {
             return done(new Error(`Expected document.body to be present`));
         }
 
+        // eslint-disable-next-line compat/compat
         const button = createButton(document.body, 'click me', () => {
             done();
         });
