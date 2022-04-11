@@ -1,7 +1,7 @@
 /* @flow */
 /* eslint import/no-nodejs-modules: off, import/no-default-export: off */
 
-import { getWebpackConfig } from 'grumbler-scripts/config/webpack.config';
+import { getWebpackConfig } from '@krakenjs/grumbler-scripts/config/webpack.config';
 
 const FILE_NAME = 'mylibrary';
 const MODULE_NAME = 'mylibrary';
