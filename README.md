@@ -27,7 +27,7 @@ Features
 - Use ES2015 out of the box
 - Write headless Karma / Mocha tests, which run in Chrome Headless and other browsers, with code coverage reports
 - Integrate with Travis CI out of the box
-- Write error free, type-safe code with ESLint, Flow-Type, and Flow-Runtime
+- Write error free, type-safe code with ESLint, and Flow-Type
 
 Technologies
 ------------
@@ -35,7 +35,6 @@ Technologies
 - babel
 - eslint
 - flowtype
-- flow-runtime
 - karma
 - phantomjs
 - chrome headless
